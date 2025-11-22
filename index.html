@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sowmiya Rajkumar | Frontend Developer</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles to match the required light tan/dark indigo theme and enhance UI/UX */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+        /* Custom Colors: Warm Tan/Beige Background and Dark Blue/Indigo Text */
+        :root {
+            --bg-primary: #f8f0e5; /* Very Light Beige/Cream (New, softer primary background) */
+            --bg-secondary: #ffffff; /* Pure white for inner content cards */
+            --text-dark: #336699; /* Dark Blue/Indigo text and primary accent */
+            --text-accent: #1e4566; /* Slightly darker indigo for hover/strong emphasis */
+            --shadow-light: rgba(51, 102, 153, 0.1); /* Light shadow from accent color */
+            --border-color: #e0d8c7; /* Soft border color */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: #333333; /* Soft black for general text */
+            scroll-behavior: smooth;
+        }
+
+        .section-padding {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+        }
+
+        /* Styling for the primary buttons (dark blue/indigo) */
+        .btn-primary {
+            background-color: var(--text-dark);
+            color: white;
+            transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+            box-shadow: 0 4px 6px -1px var(--shadow-light);
+        }
+        .btn-primary:hover:not(:disabled) {
+            background-color: var(--text-accent);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 10px -2px var(--shadow-light);
+        }
+        .btn-primary:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        /* Main content card style */
+        .main-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+        }
+        
+        /* Styling for skill tags */
+        .skill-tag {
+            background-color: #e0eaf3; /* Very light blue-gray */
+            color: var(--text-dark);
+            border: 1px solid #c8d4e0;
+            transition: background-color 0.15s;
+        }
+        .skill-tag:hover {
+            background-color: #d1dbe6;
+        }
+        
+        /* Navigation styles */
+        nav {
+            background-color: var(--text-dark);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .nav-link {
+            color: #f8f0e5; /* Light text color */
+            padding: 1rem 1.5rem;
+            transition: background-color 0.2s, color 0.2s;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .nav-link:hover {
+            background-color: var(--text-accent);
+        }
+        .nav-link.active {
+            background-color: #f8f0e5; /* Primary accent color on tan background */
+            color: var(--text-dark); /* Dark text on light background */
+            font-weight: 700;
+        }
+
+        /* Custom Resume Layout for Desktop (Two Columns) */
+        @media (min-width: 1024px) {
+            .resume-layout {
+                display: grid;
+                grid-template-columns: 1fr 2fr; /* Left section smaller than right */
+                gap: 3rem;
+            }
+            .resume-sidebar {
+                border-right: 1px solid var(--border-color);
+                padding-right: 3rem;
+            }
+        }
+
+        /* --- Poetry Generator Specific Styles --- */
+        .poetry-widget-container {
+            background-color: var(--text-dark); /* Dark background for high contrast */
+            color: white;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .poetry-widget-container h1 {
+            color: white;
+        }
+        .poetry-input-group label {
+            color: #d1e3f2; /* Light blue label text */
+            font-weight: 500;
+        }
+        .poetry-input-group input {
+             background-color: #f0f7ff;
+             color: var(--text-accent);
+             border: none;
+        }
+        #poetry-reset-btn {
+            background-color: #ffcc00; /* Yellow Reset Button */
+            color: var(--text-accent);
+            font-weight: 700;
+        }
+        #poetry-make-btn {
+            background-color: #008080; /* Teal/Aqua Make Button for contrast */
+            color: white;
+            font-weight: 700;
+        }
+        .poetry-powered-tag {
+            background-color: #3e73a7;
+            color: white;
+        }
+
+        /* Project card adjustments */
+        .project-card h4 {
+            color: var(--text-accent);
+        }
+        .project-card p {
+            color: #555555;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <!-- Removed Header Banner and Image Generation Controls -->
+
+    <!-- Navigation Bar (for multi-page simulation) -->
+    <nav id="top-nav">
+        <div class="max-w-7xl mx-auto flex justify-center sm:justify-start">
+            <!-- Navigation link for Resume View (Default) -->
+            <a id="nav-resume" class="nav-link active" onclick="showPage('resume-view')">
+                Resume view
+            </a>
+            <!-- Navigation link for Portfolio List View -->
+            <a id="nav-portfolio" class="nav-link" onclick="showPage('portfolio-list-view')">
+                My Projects 
+            </a>
+        </div>
+    </nav>
+    
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto mt-12 mb-16 px-4 sm:px-6 lg:px-8">
+        
+        <!-- ============================================= -->
+        <!-- 1. RESUME VIEW (First Page - Resume) -->
+        <!-- ============================================= -->
+        <div id="resume-view" class="main-card rounded-xl p-6 sm:p-10 lg:p-12" style="display: block;">
+            
+             <!-- Hero Section (Introduction - Name, Title) -->
+            <section id="hero" class="text-center mb-12">
+                
+                <h1 class="text-5xl sm:text-6xl font-extrabold text-indigo-900 leading-tight">
+                    Sowmiya Rajkumar
+                </h1>
+                <h2 class="text-xl sm:text-2xl font-light mt-2 text-gray-700">
+                     Frontend Developer
+                </h2>
+                
+                <!-- Bio Summary -->
+                <p class="text-lg mt-6 mb-8 text-gray-800 max-w-3xl mx-auto">
+                    My work is not just writing code, but architecting the user's first impression—a place where meticulous design meets flawless execution. 
+                    I ensure every digital journey is intuitive, elegant, and perfectly responsive, building interfaces that delight and perform.
+                </p>
+            </section>
+            
+            <!-- Resume Content - Two Column Layout for Desktop -->
+            <div class="resume-layout">
+                
+                <!-- Left Sidebar: Skills & Contact -->
+                <div class="resume-sidebar mb-10 lg:mb-0">
+                    
+                    <!-- Contact Info -->
+                    <div id="contact" class="mb-10">
+                        <h4 class="text-2xl font-bold mb-4 text-indigo-800 border-b pb-2 border-gray-300">Contact Details</h4>
+                        <div class="space-y-3 text-gray-700">
+                            <p class="flex items-center">
+                                <svg class="w-5 h-5 mr-2 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-2 4v7a2 2 0 01-2 2H5a2 2 0 01-2-2v-7"></path></svg>
+                                <a href="mailto:iamsowmiya.rajkumar@gamil.com" class="hover:text-indigo-700">iamsowmiya.rajkumar@gamil.com</a>
+                            </p>
+                            <p class="flex items-center">
+                                <svg class="w-5 h-5 mr-2 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                                <a href="www.linkedin.com/in/sowmiya-r-a17a05351" target="_blank" class="hover:text-indigo-700">LinkedIn Profile</a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Skill Summary Section -->
+                    <section id="skills">
+                        <h3 class="text-2xl font-bold mb-4 text-indigo-800 border-b pb-2 border-gray-300">Technical Skills</h3>
+
+                        <!-- Skill Tags -->
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-tag px-3 py-1 rounded-full text-xs font-semibold">HTML5 & CSS3</span>
+                            <span class="skill-tag px-3 py-1 rounded-full text-xs font-semibold">JavaScript (ES6+)</span>
+                            <span class="skill-tag px-3 py-1 rounded-full text-xs font-semibold">Typescript</span>
+                            <span class="skill-tag px-3 py-1 rounded-full text-xs font-semibold">Python</span>
+                            <span class="skill-tag px-3 py-1 rounded-full text-xs font-semibold">React.js</span>
+                            <span class="skill-tag px-3 py-1 rounded-full text-xs font-semibold">Tailwind CSS</span>
+                            <span class="skill-tag px-3 py-1 rounded-full text-xs font-semibold">Bootstrap</span>
+                            <span class="skill-tag px-3 py-1 rounded-full text-xs font-semibold">Git/GitHub</span>
+                            <span class="skill-tag px-3 py-1 rounded-full text-xs font-semibold">REST APIs</span>
+                            <span class="skill-tag px-3 py-1 rounded-full text-xs font-semibold">Figma & Postman</span>
+                        </div>
+                    </section>
+                    
+                </div>
+                
+                <!-- Right Main Content: Experience & Education -->
+                <div class="resume-main">
+                    
+                    <!-- Career Highlights -->
+                    <div id="experience" class="mb-10">
+                        <h4 class="text-2xl font-bold mb-6 text-indigo-800 border-b pb-2 border-gray-300">Career & Experience</h4>
+                        <div class="space-y-6">
+                            <!-- Highlight 1: Frontend Developer Intern -->
+                            <div class="border-l-4 border-indigo-600 pl-4">
+                                <p class="text-xl font-bold text-indigo-900">
+                                    Frontend Developer Intern, Swching Seltter Company 
+                                </p>
+                                <p class="text-sm font-medium text-gray-500 mb-3">(Oct 25, 2025 – Nov 25, 2025)</p>
+                                <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                                    <li>Developed responsive web pages using HTML, CSS, JavaScript, and React.js, improving load times by 15%.</li>
+                                    <li>Styled modern, accessible interfaces with Tailwind CSS and Bootstrap.</li>
+                                    <li>Integrated REST APIs to fetch and display dynamic content in real-time.</li>
+                                    <li>Collaborated effectively in a team environment using GitHub for version control.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Education Section -->
+                    <section id="education">
+                        <h4 class="text-2xl font-bold mb-6 text-indigo-800 border-b pb-2 border-gray-300">Education Background</h4>
+                        
+                        <!-- Degree 1: College -->
+                        <div class="mb-6 border-l-4 border-gray-400 pl-4">
+                            <p class="text-lg font-semibold text-indigo-900">B.E Electronics and Communication Engineering</p>
+                            <p class="text-md text-gray-700">P.B College of Engineering, Sriperumbudur, Chennai-602117</p>
+                            <p class="text-sm text-gray-500">(2022-2026)</p>
+                        </div>
+
+                        <!-- Degree 2: 12th Grade -->
+                        <div class="mb-6 border-l-4 border-gray-400 pl-4">
+                            <p class="text-lg font-semibold text-indigo-900">12th Higher Secondary Certificate</p>
+                            <p class="text-md text-gray-700">P.M.R Matriculation Higher Secondary School, Chennai - 600037</p>
+                            <p class="text-sm text-gray-500">(2021-2022)</p>
+                        </div>
+                        
+                        <!-- Degree 3: 10th Grade -->
+                        <div class="border-l-4 border-gray-400 pl-4">
+                            <p class="text-lg font-semibold text-indigo-900">10th Secondary Leaving Certificate</p>
+                            <p class="text-md text-gray-700">P.M.R Matriculation Higher Secondary School, Chennai - 600037</p>
+                            <p class="text-sm text-gray-500">(2019-2020)</p>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+            
+            <!-- NEW POETRY GENERATOR SECTION - Placed prominently at the bottom of the Resume view -->
+            <div id="poetry-break-widget" class="poetry-widget-container text-center mt-12">
+                <h4 class="text-3xl font-extrabold mb-6">
+                    Take a Break and be Poetic!
+                </h4>
+
+                <!-- Input Fields -->
+                <div class="space-y-4 mb-8 text-left max-w-sm mx-auto">
+                    <div class="poetry-input-group flex flex-col sm:flex-row items-start sm:items-center justify-between space-x-0 sm:space-x-4">
+                        <label for="plant-name" class="whitespace-nowrap text-sm mb-1 sm:mb-0">Enter the name of a plant:</label>
+                        <!-- Removed default value attribute -->
+                        <input type="text" id="plant-name" placeholder="e.g. rose" 
+                               class="w-full p-2 rounded-md shadow-sm focus:ring-yellow-400 focus:border-yellow-400">
+                    </div>
+                    
+                    <div class="poetry-input-group flex flex-col sm:flex-row items-start sm:items-center justify-between space-x-0 sm:space-x-4">
+                        <label for="animal-name" class="whitespace-nowrap text-sm mb-1 sm:mb-0">Enter the name of an animal:</label>
+                        <!-- Removed default value attribute -->
+                        <input type="text" id="animal-name" placeholder="e.g. dolphin" 
+                               class="w-full p-2 rounded-md shadow-sm focus:ring-yellow-400 focus:border-yellow-400">
+                    </div>
+                </div>
+
+                <!-- Poem Output Area -->
+                <div class="mt-8 p-4 bg-white bg-opacity-10 rounded-lg">
+                    <h5 id="poem-title" class="text-xl font-bold mb-4 text-yellow-300"></h5>
+                    <!-- Use <pre> for line breaks to show the poem correctly -->
+                    <pre id="poem-output" class="text-md text-gray-100 leading-relaxed whitespace-pre-wrap max-w-md mx-auto"></pre>
+                </div>
+
+                <!-- Buttons -->
+                <div class="mt-8 flex justify-center space-x-4">
+                    <button id="poetry-reset-btn" onclick="resetForm()" class="px-5 py-2 rounded-lg transition duration-150 hover:opacity-90">
+                        Reset
+                    </button>
+                    <button id="poetry-make-btn" onclick="generatePoem()" class="px-5 py-2 rounded-lg transition duration-150 hover:opacity-90">
+                        Generate Poem
+                    </button>
+                </div>
+                
+                <!-- Footer Tags -->
+                <div class="mt-6">
+                    <div class="flex justify-center text-xs">
+                        <span class="poetry-powered-tag px-2 py-1 rounded-md font-semibold">JavaScript</span>
+                        <span class="poetry-powered-tag px-2 py-1 rounded-md font-semibold ml-2">Poetry</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ============================================= -->
+        <!-- 2. PORTFOLIO LIST VIEW (Second Page - Projects List) -->
+        <!-- ============================================= -->
+        <div id="portfolio-list-view" class="section-padding" style="display: none;">
+            <h3 class="text-4xl font-extrabold text-center mb-10 text-indigo-800">My Projects Showcase</h3>
+
+            <!-- Projects Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+
+                <!-- Project Card 1: MUI Table Form -->
+                <div class="project-card main-card p-4 rounded-xl text-center hover:shadow-lg transition duration-300">
+                    <img class="w-full h-40 object-cover rounded-t-lg mb-4" 
+                         src="assests/Copilot_20251122_183707.png" >
+                    <h4 class="text-xl font-bold mb-1">MUI Table Form</h4>
+                    <p class="text-sm text-gray-700 mb-4 h-20 overflow-hidden">Built a responsive table form using Material‑UI and React.js, with editable rows, form validation, and API integration to manage dynamic data efficiently.</p>
+                    <button onclick="viewProjectDetails('project1')" class="btn-primary px-4 py-2 rounded-lg text-sm w-full">View Details</button>
+                </div>
+
+                <!-- Project Card 2: Calculator -->
+                <div class="project-card main-card p-4 rounded-xl text-center hover:shadow-lg transition duration-300">
+                    <img class="w-full h-40 object-cover rounded-t-lg mb-4" 
+                          
+                         src="assests/Copilot_20251122_182731.png">
+                    <h4 class="text-xl font-bold mb-1"> Calculator</h4>
+                    <p class="text-sm text-gray-700 mb-4 h-20 overflow-hidden">A web-based calculator built with HTML, CSS, and JavaScript. It performs basic arithmetic operations, supports decimals, and showcases strong DOM manipulation skills.</p>
+                    <button onclick="viewProjectDetails('project2')" class="btn-primary px-4 py-2 rounded-lg text-sm w-full">View Details</button>
+                </div>
+
+                <!-- Project Card 3: Recipe Book -->
+                <div class="project-card main-card p-4 rounded-xl text-center hover:shadow-lg transition duration-300">
+                    <img class="w-full h-40 object-cover rounded-t-lg mb-4" 
+                      
+                         src="assests/Copilot_20251122_184208.png">
+                    <h4 class="text-xl font-bold mb-1"> Recipe Book</h4>
+                    <p class="text-sm text-gray-700 mb-4 h-20 overflow-hidden">A simple and stylish website that showcases homemade recipes, built using HTML and Bootstrap with a cozy, responsive design.</p>
+                    <button onclick="viewProjectDetails('project3')" class="btn-primary px-4 py-2 rounded-lg text-sm w-full">View Details</button>
+                </div>
+                
+                <!-- Project Card 4: My Portfolio -->
+                <div class="project-card main-card p-4 rounded-xl text-center hover:shadow-lg transition duration-300">
+                    <img class="w-full h-40 object-cover rounded-t-lg mb-4" 
+                         src="assests/Copilot_20251122_181009.png">
+                    <h4 class="text-xl font-bold mb-1">My Portfolio</h4>
+                    <p class="text-sm text-gray-700 mb-4 h-20 overflow-hidden">A showcase of my projects, skills, and creativity — highlighting web development, design, and problem‑solving through real‑world applications.</p>
+                    <button onclick="viewProjectDetails('project4')" class="btn-primary px-4 py-2 rounded-lg text-sm w-full">View Details</button>
+                </div>
+
+            </div>
+        </div>
+        
+        <!-- ============================================= -->
+        <!-- 3. PROJECT DETAIL VIEW (Third Page - Project Details) -->
+        <!-- ============================================= -->
+        <div id="project-detail-view" style="display: none;" class="project-card main-card rounded-xl p-6 sm:p-10">
+            <button onclick="showPage('portfolio-list-view')" class="btn-primary px-4 py-2 rounded-lg mb-6 text-sm flex items-center">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                Back to Projects
+            </button>
+            
+            <h1 id="detail-title" class="text-4xl font-extrabold mb-4 text-indigo-900">Project Title Placeholder</h1>
+            <p class="text-lg text-gray-700 mb-6">
+                **Technologies Used:** <span id="detail-tech" class="font-semibold text-indigo-700">HTML, CSS, JavaScript, React</span>
+            </p>
+
+            <img id="detail-image" class="w-full h-64 sm:h-96 object-cover rounded-lg mb-6 shadow-md" 
+                 src="https://placehold.co/900x400/8c8c8c/ffffff?text=Detailed+Project+Image" 
+                 alt="Project Detail Image">
+
+            <div id="detail-content" class="text-gray-800 space-y-6 text-base">
+                <p>This is the detailed content area for a specific project. You can describe the project's goals, challenges, solutions, and your key contributions here.</p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-16 py-8 border-t border-gray-400 bg-white shadow-inner">
+        <div class="text-center text-sm text-gray-600">
+            <p>&copy; 2024 Sowmiya Rajkumar. Designed with UI/UX principles in mind.</p>
+            <p class="mt-1">Built with HTML, Tailwind CSS, and Vanilla JavaScript.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Project Data for the detail view
+        const projectsData = {
+            'project1': {
+                title: 'Project 1: MUI Table Form',
+                tech: 'React.js, Material-UI, API Integration',
+                desc: 'Built a responsive, data-driven table form using Material-UI components within a React application. Implemented features like inline editing, form validation, and seamless integration with a mock REST API to manage user data effectively. This project highlights proficiency in modern component libraries and state management.',
+                imageUrl: 'https://placehold.co/900x400/e9d5b5/336699?text=mui+table+form',
+                demoLink: 'https://mui-table-form.vercel.app/'
+            },
+            'project2': {
+                title: 'Project 2: Calculator',
+                tech: 'HTML, CSS, JavaScript (Vanilla)',
+                desc: 'A fully functional web calculator demonstrating strong foundational skills in front-end development. It handles complex arithmetic logic, decimal precision, and error states. The interface is meticulously styled for a realistic, user-friendly experience, emphasizing DOM manipulation and event handling.',
+                imageUrl: 'https://placehold.co/900x400/e9d5b5/336699?text=Calculator',
+                demoLink: 'https://vercel.com/sowmiya-rs-projects-8e808e7c/calculator'
+            },
+            'project3': {
+                title: 'Project 3: Recipe Book',
+                tech: 'HTML, Bootstrap, Custom CSS',
+                desc: 'A simple, aesthetically pleasing online recipe book. The design uses a soft, cozy theme with Bootstrap for responsive layout and custom CSS for unique styling. The site structure allows users to navigate from a list of recipe cards to detailed recipe pages, focusing on clear presentation of ingredients and steps.',
+                imageUrl: 'https://placehold.co/900x400/4CAF50/ffffff?text=Recipe+Book',
+                demoLink: 'https://recipebook-theta.vercel.app/'
+            },
+            'project4': {
+                title: 'Project 4: Jarvis Assistant',
+                tech: 'Python, Speech Recognition, pyttsx3, OpenAI API',
+                desc: 'A practical, real-time voice-controlled personal assistant demonstrating integration of AI and Python. The assistant listens for commands, processes intelligent queries via the OpenAI API, and responds using text-to-speech. This project is a strong showcase of back-end scripting, external API handling, and continuous loop execution.',
+                imageUrl: 'https://placehold.co/900x400/2C3E50/EAEAEA?text=Python+AI+Assistant',
+                demoLink: '#'
+            }
+        };
+
+        /**
+         * Shows a specific page view and hides all others.
+         * Simulates multi-page navigation by toggling display properties.
+         * @param {string} pageId - the ID of the div to show ('resume-view', 'portfolio-list-view', 'project-detail-view')
+         */
+        function showPage(pageId) {
+            // Hide all views
+            document.getElementById('resume-view').style.display = 'none';
+            document.getElementById('portfolio-list-view').style.display = 'none';
+            document.getElementById('project-detail-view').style.display = 'none';
+
+            // Show the selected view
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.style.display = 'block';
+                // Scroll to top of the main content area
+                document.getElementById('top-nav').scrollIntoView({ behavior: 'smooth' }); 
+            }
+            
+            // Update the active navigation link class
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            if (pageId === 'resume-view') {
+                 document.getElementById('nav-resume').classList.add('active');
+            } else if (pageId === 'portfolio-list-view') {
+                document.getElementById('nav-portfolio').classList.add('active');
+            }
+        }
+
+        /**
+         * Loads specific project details into the detail view.
+         * @param {string} projectId - the key in projectsData
+         */
+        function viewProjectDetails(projectId) {
+            const project = projectsData[projectId];
+            if (!project) {
+                console.error("Project details not found for ID:", projectId);
+                return;
+            }
+
+            // Populate the detail view
+            document.getElementById('detail-title').textContent = project.title;
+            document.getElementById('detail-tech').textContent = project.tech;
+            document.getElementById('detail-image').src = project.imageUrl;
+            document.getElementById('detail-image').alt = project.title + " Image";
+            
+            // Create detail content section
+            const detailContentDiv = document.getElementById('detail-content');
+            detailContentDiv.innerHTML = `
+                <p class="text-gray-800">${project.desc}</p>
+                <div class="mt-8 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                    <p class="font-bold text-indigo-900">Live Demo / Code Repository:</p>
+                    <a href="${project.demoLink}" target="_blank" class="text-indigo-700 hover:text-indigo-900 hover:underline font-bold block mt-2 transition duration-150">View Project Link</a>
+                </div>
+            `;
+            
+            // Show the detail page
+            showPage('project-detail-view');
+        }
+
+        // --- Poetry Generator Logic ---
+        const poemTemplate = [
+            'Wake up the {P}, the morning has come',
+            'Rouse the {A}, because the coffee needs to be done',
+            "'I need the coffee now', says the {P}",
+            'Look around, coffee there is none',
+            'All because the {A} has to run'
+        ];
+
+        const poemTitleTemplate = 'The {P} and the {A} in the Coffee Quest';
+
+        /**
+         * Clears the poem output area and sets a starting message.
+         */
+        function clearPoemOutput() {
+            const poemOutput = document.getElementById('poem-output');
+            const poemTitle = document.getElementById('poem-title');
+            if (poemTitle) poemTitle.textContent = 'Enter two names and click Generate Poem!';
+            if (poemOutput) poemOutput.textContent = '';
+        }
+
+        /**
+         * Generates the poem based on the user's input.
+         */
+        function generatePoem() {
+            const plantInput = document.getElementById('plant-name');
+            const animalInput = document.getElementById('animal-name');
+            const poemOutput = document.getElementById('poem-output');
+            const poemTitle = document.getElementById('poem-title');
+
+            if (!plantInput || !animalInput || !poemOutput || !poemTitle) return;
+
+            // Check if both inputs are empty. If so, display a warning and exit.
+            if (!plantInput.value.trim() && !animalInput.value.trim()) {
+                clearPoemOutput();
+                poemTitle.textContent = "Please enter names to generate the poem.";
+                return;
+            }
+
+            // Use input values, defaulting to placeholders if one is empty
+            const plant = plantInput.value.toLowerCase().trim() || 'mystical orchid';
+            const animal = animalInput.value.toLowerCase().trim() || 'wise dolphin';
+
+            // Capitalize the first letter of each word for the title
+            const formatWord = (word) => word.charAt(0).toUpperCase() + word.slice(1);
+            const titlePlant = formatWord(plant);
+            const titleAnimal = formatWord(animal);
+
+            // Set the title
+            poemTitle.textContent = poemTitleTemplate
+                .replace('{P}', titlePlant)
+                .replace('{A}', titleAnimal);
+
+            // Construct the poem, replacing placeholders
+            const poemText = poemTemplate.map(line => {
+                let formattedLine = line.replace('{P}', plant);
+                formattedLine = formattedLine.replace('{A}', animal);
+                // Simple capitalization for the first word of the poem lines
+                formattedLine = formattedLine.charAt(0).toUpperCase() + formattedLine.slice(1);
+                return formattedLine;
+            }).join('\n'); // Join lines with newline characters
+
+            // Display the poem
+            poemOutput.textContent = poemText;
+        }
+
+        /**
+         * Resets the input fields and clears the poem area.
+         */
+        function resetForm() {
+            const plantInput = document.getElementById('plant-name');
+            const animalInput = document.getElementById('animal-name');
+            
+            // Clear inputs completely
+            if (plantInput) plantInput.value = '';
+            if (animalInput) animalInput.value = '';
+            
+            // Clear the output area and set starting instructions
+            clearPoemOutput(); 
+        }
+
+        // Show the resume view on initial load and clear the poem output
+        window.onload = () => {
+             showPage('resume-view');
+             // Initialize the poetry widget to an empty state
+             clearPoemOutput(); 
+        };
+
+    </script>
+</body>
+</html>
